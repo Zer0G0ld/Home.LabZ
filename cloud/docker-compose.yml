@@ -1,0 +1,24 @@
+# cloud/docker-compose.yml
+version: "3.9"
+
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: always
+    ports:
+      - "8090:80"
+    volumes:
+      - ./data:/var/www/html
+    environment:
+      - POSTGRES_DB=homelabdb
+      - POSTGRES_USER=homelab
+      - POSTGRES_PASSWORD=senha123
+      - POSTGRES_HOST=postgres
+    depends_on:
+      - postgres  # isso só funciona se o postgres estiver na mesma rede ou no mesmo docker-compose
+networks:
+  default:
+    external:
+      name: homelabz
+
